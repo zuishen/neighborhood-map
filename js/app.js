@@ -8,6 +8,8 @@ var ViewModel = function() {
 	var self = this;
 	self.locationList = ko.observableArray([]);
 	self.markers = [];
+
+
 	self.addMarker = function(i, marker, name) {
 		self.markers.push(marker);
 		self.locationList.push(new Location({index: i, name: name}));

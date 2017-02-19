@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Neighborhood Map</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<style type="text/css">
 		html, body {
 			height: 100%;
@@ -30,6 +31,15 @@
 			border-radius: 3px;
 			line-height: 35px;
 		}
+		#input {
+			width: 160px;
+			text-align: left;
+		}
+		#filter {
+			padding: 0;
+			width: 100%;
+			margin-bottom: 30px;
+		}
 		.item {
 			border: solid 1px;
 			list-style: none;
@@ -42,9 +52,24 @@
 			<div id="title">
 				<h2>Locations</h2>
 			</div>
+			<!--
 			<div id="filter">	
 				<input type="text" id="input" value="Station location">
 				<input type="button" id="btn" value="Filter">
+			</div>
+			-->
+			<div id="filter">
+				<div class="btn-group">
+					<button type="button" id="input" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Select Categories</button>
+					<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+						Filter&nbsp;<span class="glyphicon glyphicon-filter"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#" onclick="alert('a')">Food</a></li>
+						<li><a href="#">Park</a></li>
+						<li><a href="#">Store</a></li>
+					</ul>
+				</div>
 			</div>
 			<div id="show-results">
 				<ul id="results" data-bind="foreach: locationList">
@@ -101,6 +126,8 @@
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGXytnUuXlETU_dEEwqCJLbAXmq6-kbjE&v=3&callback=initMap&libraries=places">
 	</script>
 	<script type="text/javascript" src="js/knockout-3.4.1.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
 </body>
 </html>
