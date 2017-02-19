@@ -14,9 +14,15 @@ var ViewModel = function() {
 	};
 
 	self.showInfoWindow = function(item) {
-		console.log(item);
-		infowindow.setContent(item.title());
-		infowindow.open(map, self.markers[item.index()]);
+		//console.log(item);
+		var marker = self.markers[item.index()];
+		if (infowindow.marker != marker) {
+			infowindow.setContent("<div>"+item.title()+"</div>");
+			infowindow.open(map, marker);
+			infowindow.addListener('closeclick', function() {
+				infowindow.setPosition(null);
+			});
+		}
 	};
 
 	self.getLocation = function(i) {
