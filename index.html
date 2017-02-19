@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Neighborhood Map</title>
+	<style type="text/css">
+		html, body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			font-family: Arial, sans-serif;
+		}
+		ul {
+			padding: 0;
+		}
+		#container {
+			height: 100%;
+		}
+		#map {
+			height: 100%;
+			position: absolute;
+			left: 362px;
+			right: 0;
+			top: 0;
+		}
+		#side {
+			width: 340px;
+			padding: 10px 10px 30px 10px;
+			border: 1px solid #999;
+			height: 100%;
+			border-radius: 3px;
+			line-height: 35px;
+		}
+		.item {
+			border: solid 1px;
+			list-style: none;
+		}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<div id="side">
+			<div id="title">
+				<h2>Locations</h2>
+			</div>
+			<div id="filter">	
+				<input type="text" id="input" value="Station location">
+				<input type="button" id="btn" value="Filter">
+			</div>
+			<div id="show-results">
+				<ul id="results" data-bind="foreach: locationList">
+					<li class="item" data-bind="text: title, click: $root.showInfoWindow"></li>
+				</ul>
+			</div>
+		</div>
+		<div id="map"></div>
+	</div>
+	<script type="text/javascript">
+		var map;
+		var infowindow;
+		var bounds;
+		function initMap() {
+			map = new google.maps.Map(document.getElementById('map'), {
+				center: {lat: 34.0223519, lng: -118.285117},
+				zoom: 13
+			});
+			var service = new google.maps.places.PlacesService(map);
+			service.nearbySearch({
+				location: {lat: 34.0223519, lng: -118.285117},
+				radius: 500,
+				types: ['food']
+			}, callback);
+
+			infowindow = new google.maps.InfoWindow();
+			bounds = new google.maps.LatLngBounds();
+		}
+
+		function callback(results, status) {
+			//console.log(results);
+			if (status === google.maps.places.PlacesServiceStatus.OK) {
+				for (var i = 0; i < results.length; i++) {
+					createMarker(results[i], i);		
+				}
+			}
+			map.fitBounds(bounds);
+		}
+		function createMarker(place, index) {
+		  var placeLoc = place.geometry.location;
+		  var marker = new google.maps.Marker({
+		    map: map,
+		    position: place.geometry.location
+		  });
+		  bounds.extend(marker.position);
+		  myViewModel.addMarker(index, marker, place.name);
+		  google.maps.event.addListener(marker, 'click', function() {
+		    	myViewModel.showInfoWindow(myViewModel.getLocation(index));
+		  });
+		}
+	</script>
+	<script type="text/javascript" src="js/collections.js"></script>
+	<script async defer 
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGXytnUuXlETU_dEEwqCJLbAXmq6-kbjE&v=3&callback=initMap&libraries=places">
+	</script>
+	<script type="text/javascript" src="js/knockout-3.4.1.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
+</body>
+</html>
