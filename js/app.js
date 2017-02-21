@@ -95,10 +95,11 @@ var ViewModel = function() {
 	self.makeInfoWindow = function(locat, ypInfo) {
 		var marker = self.markers[locat.index()];
     	if (infowindow.marker != marker) {
+    		var tmp = (ypInfo.rating !== 'Not available' ? "<img src='"+ ypInfo.ratingUrl + "' alt='"+ypInfo.rating+"'>" : ypInfo.rating);
 			infowindow.setContent("<div>Name: " + locat.title() + "/"+ypInfo.name +"</div>"
 				+ "<div>Address: "+ locat.address + "</div>"
 				+ "<div>Phone: "+ ypInfo.phone + "</div>" 
-				+ "<div>Rating: <img src='"+ ypInfo.ratingUrl + "' alt='"+ypInfo.rating+"/5.0'></div>"
+				+ "<div>Rating: " + tmp + "</div>"
 			);
 		}
 		infowindow.open(map, marker);
