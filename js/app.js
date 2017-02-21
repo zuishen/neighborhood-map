@@ -65,9 +65,9 @@ var ViewModel = function() {
 			    	if (item.name.replace('&', 'and').includes(location.title()) || location.title().includes(item.name.replace('&', 'and'))) {
 			    		i = yelpResults.businesses.indexOf(item);
 			    	}
-					console.log(item.name);
+					//console.log(item.name);
 			    });
-			    console.log(yelpResults);
+			    //console.log(yelpResults);
 			    
 			    if (yelpResults.businesses.length > 0 && i != -1) {
 			    	yelpInfo.name = yelpResults.businesses[i].name;
