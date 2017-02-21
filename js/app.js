@@ -28,6 +28,7 @@ var ViewModel = function() {
 	};
 
 	self.showInfoWindow = function(location) {
+		toggleBounce(self.markers[location.index()]);
 		var yelpInfo = {
 			name: 'Not available',
 			phone: 'Not available', 
@@ -93,7 +94,6 @@ var ViewModel = function() {
 
 	self.makeInfoWindow = function(locat, ypInfo) {
 		var marker = self.markers[locat.index()];
-
     	if (infowindow.marker != marker) {
 			infowindow.setContent("<div>Name: " + locat.title() + "/"+ypInfo.name +"</div>"
 				+ "<div>Address: "+ locat.address + "</div>"
@@ -105,6 +105,7 @@ var ViewModel = function() {
 		infowindow.addListener('closeclick', function() {
 			infowindow.setPosition(null);
 		});
+		toggleBounce(marker);
 	};
  
 	self.categorySelect = function(value) {

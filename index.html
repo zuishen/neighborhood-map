@@ -117,13 +117,22 @@
 		  var placeLoc = place.geometry.location;
 		  var marker = new google.maps.Marker({
 		    map: map,
-		    position: place.geometry.location
+		    position: place.geometry.location,
+		    animation: google.maps.Animation.DROP
 		  });
 		  bounds.extend(marker.position);
 		  myViewModel.addMarker(index, marker, place.name, place.vicinity);
 		  google.maps.event.addListener(marker, 'click', function() {
 		    	myViewModel.showInfoWindow(myViewModel.getLocation(index));
 		  });
+		}
+
+		function toggleBounce(marker) {
+		  if (marker.getAnimation() !== null) {
+		    marker.setAnimation(null);
+		  } else {
+		    marker.setAnimation(google.maps.Animation.BOUNCE);
+		  }
 		}
 	</script>
 	<script async defer 
