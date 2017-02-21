@@ -29,6 +29,7 @@ var ViewModel = function() {
 
 	self.showInfoWindow = function(location) {
 		toggleBounce(self.markers[location.index()]);
+		console.log(location.address);
 		var yelpInfo = {
 			name: 'Not available',
 			phone: 'Not available', 
@@ -87,9 +88,11 @@ var ViewModel = function() {
 		$.ajax(settings);
 	};
 
-	self.addMarker = function(i, marker, name, address) {
+	self.addMarker = function(marker, name, address) {
+		var i = self.markers.length;
 		self.markers.push(marker);
 		self.locationList.push(new Location({index: i, name: name, address: address}));
+		return i;
 	};
 
 	self.makeInfoWindow = function(locat, ypInfo) {
@@ -112,7 +115,10 @@ var ViewModel = function() {
 	self.categorySelect = function(value) {
 		self.category(value);
 		self.clearLocations();
-		nearbySearch(locat, [value]);
+		//nearbySearch(locat, [value]);
+		initialLoactions.forEach(function(item) {
+				nearbySearch(item.location, [value]);
+		});
 	};
 
 	self.getLocation = function(i) {
@@ -130,7 +136,9 @@ var ViewModel = function() {
 	self.clearCategory = function() {
 		self.category('Select Category');
 		self.clearLocations();
-		nearbySearch(locat, self.categories);
+		initialLoactions.forEach(function(item) {
+			nearbySearch(item.location, self.categories);
+		});
 	};
 };
 

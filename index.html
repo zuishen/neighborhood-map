@@ -79,20 +79,25 @@
 		<div id="map"></div>
 	</div>
 	<script type="text/javascript" src="js/collections.js"></script>
+	<script type="text/javascript" src="js/knockout-3.4.1.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	<script src="js/oauth.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
 	<script type="text/javascript">
 		var map;
 		var infowindow;
 		var bounds;
 		var service;
-		var locat = {lat: 34.0223519, lng: -118.285117};
+		//var locat = {lat: 34.0223519, lng: -118.285117};
 		function initMap() {
 			map = new google.maps.Map(document.getElementById('map'), {
-				center: locat,
+				center: {lat: 34.0223519, lng: -118.285117},
 				zoom: 13
 			});
 			service = new google.maps.places.PlacesService(map);
 			initialLoactions.forEach(function(item) {
-				nearbySearch(item.location, ['food', 'park', 'store']);
+				nearbySearch(item.location, myViewModel.categories);
 			});
 
 			infowindow = new google.maps.InfoWindow();
@@ -111,40 +116,36 @@
 			//console.log(results);
 			if (status === google.maps.places.PlacesServiceStatus.OK) {
 				for (var i = 0; i < results.length; i++) {
-					createMarker(results[i], i);		
+					createMarker(results[i]);		
 				}
 			}
 			map.fitBounds(bounds);
 		}
-		function createMarker(place, index) {
-		  var placeLoc = place.geometry.location;
-		  var marker = new google.maps.Marker({
-		    map: map,
-		    position: place.geometry.location,
-		    animation: google.maps.Animation.DROP
-		  });
-		  bounds.extend(marker.position);
-		  myViewModel.addMarker(index, marker, place.name, place.vicinity);
-		  google.maps.event.addListener(marker, 'click', function() {
+		function createMarker(place) {
+		  	var placeLoc = place.geometry.location;
+		  	var marker = new google.maps.Marker({
+			    map: map,
+			    position: place.geometry.location,
+			    animation: google.maps.Animation.DROP
+		  	});
+		  	bounds.extend(marker.position);
+		  	var index = myViewModel.addMarker(marker, place.name, place.vicinity);
+		  	google.maps.event.addListener(marker, 'click', function() {
 		    	myViewModel.showInfoWindow(myViewModel.getLocation(index));
-		  });
+		  	});
 		}
 
 		function toggleBounce(marker) {
-		  if (marker.getAnimation() !== null) {
-		    marker.setAnimation(null);
-		  } else {
-		    marker.setAnimation(google.maps.Animation.BOUNCE);
-		  }
+		  	if (marker.getAnimation() !== null) {
+		    	marker.setAnimation(null);
+		  	} else {
+		    	marker.setAnimation(google.maps.Animation.BOUNCE);
+		  	}
 		}
 	</script>
 	<script async defer 
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGXytnUuXlETU_dEEwqCJLbAXmq6-kbjE&v=3&callback=initMap&libraries=places">
 	</script>
-	<script type="text/javascript" src="js/knockout-3.4.1.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  	<script src="js/oauth.js"></script>
-	<script type="text/javascript" src="js/app.js"></script>
+	
 </body>
 </html>
