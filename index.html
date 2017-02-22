@@ -56,6 +56,15 @@
 			<div id="title">
 				<h2>Locations</h2>
 			</div>
+			<div>
+				<div class="btn-group">
+					<button type="button" id="input-school" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-bind="text: school"></button>
+					<ul class="dropdown-menu" role="menu" data-bind="foreach: schools">
+						<li><a href="#" data-bind="text: title, click: $root.schoolSelect"></a></li>
+					</ul>
+				</div>
+				
+			</div>
 			<div id="filter">
 				<div class="btn-group">
 					<button type="button" id="input" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-bind="text: category"></button>

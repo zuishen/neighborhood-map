@@ -11,6 +11,8 @@ var ViewModel = function() {
 	self.markers = [];
 	self.categories = ['food', 'park', 'store'];
 	self.category = ko.observable('Select Category');
+	self.schools = initialLoactions;
+	self.school = ko.observable('Select School');
 	self.isShow = ko.computed(function() {
 		return self.category() !== 'Select Category' ? 'inline-block' : 'none'; 
 	});
@@ -121,6 +123,18 @@ var ViewModel = function() {
 		});
 	};
 
+	self.schoolSelect = function(value) {
+		self.school(value.title);
+		self.clearLocations();
+		var cate = (self.category() === 'Select Category' ? self.categories : [self.category()]);
+		//nearbySearch(locat, [value]);
+		self.schools.forEach(function(item) {
+			if (item.title == value.title) {
+				nearbySearch(item.location, cate);
+			}
+		});
+	};
+
 	self.getLocation = function(i) {
 		return self.locationList()[i];
 	};
@@ -131,6 +145,7 @@ var ViewModel = function() {
 		});
 		self.markers = [];
 		self.locationList([]);
+		bounds = new google.maps.LatLngBounds();
 	};
 
 	self.clearCategory = function() {
