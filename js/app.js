@@ -31,7 +31,7 @@ var ViewModel = function() {
 
 	self.showInfoWindow = function(location) {
 		toggleBounce(self.markers[location.index()]);
-		console.log(location.address);
+		console.log(location.title());
 		var yelpInfo = {
 			name: 'Not available',
 			phone: 'Not available', 
@@ -48,9 +48,7 @@ var ViewModel = function() {
 		    callback: 'cb',           // This is crucial to include for jsonp implementation in AJAX or else the oauth-signature will be wrong.
 		    location: location.address.split(' ').join('+'),//'3601+Trousdale+Parkway,+Los Angeles',
 		    //sort: '1',
-		    radius_filter: '300',
-		    limit: '30',
-		    //term: 'food',
+		    term: location.title(),
 		    cll: self.markers[location.index()].position.lat+','+self.markers[location.index()].position.lng
   		};
 
@@ -64,20 +62,19 @@ var ViewModel = function() {
 		    dataType: 'jsonp',
 		    success: function(yelpResults) {
 			    // Do stuff with results
-			    var i = -1;
-			    yelpResults.businesses.forEach(function(item) {
-			    	if (item.name.replace('&', 'and').includes(location.title()) || location.title().includes(item.name.replace('&', 'and'))) {
-			    		i = yelpResults.businesses.indexOf(item);
-			    	}
-					//console.log(item.name);
-			    });
-			    //console.log(yelpResults);
-			    
-			    if (yelpResults.businesses.length > 0 && i != -1) {
-			    	yelpInfo.name = yelpResults.businesses[i].name;
-			    	yelpInfo.phone = yelpResults.businesses[i].display_phone;
-		    		yelpInfo.rating = yelpResults.businesses[i].rating;
-		    		yelpInfo.ratingUrl = yelpResults.businesses[i].rating_img_url;
+			  //   var i = -1;
+			  //   yelpResults.businesses.forEach(function(item) {
+			  //   	if (item.name.replace('&', 'and').includes(location.title()) || location.title().includes(item.name.replace('&', 'and'))) {
+			  //   		i = yelpResults.businesses.indexOf(item);
+			  //   	}
+					// console.log(item.name);
+			  //   });
+			    //console.log(yelpResults);		    
+			    if (yelpResults.businesses.length > 0) {
+			    	yelpInfo.name = yelpResults.businesses[0].name;
+			    	yelpInfo.phone = yelpResults.businesses[0].display_phone;
+		    		yelpInfo.rating = yelpResults.businesses[0].rating;
+		    		yelpInfo.ratingUrl = yelpResults.businesses[0].rating_img_url;
 			    }	
 		    	self.makeInfoWindow(location, yelpInfo);
 			},
@@ -103,7 +100,7 @@ var ViewModel = function() {
     		var tmp = (ypInfo.rating !== 'Not available' ? "<img src='"+ ypInfo.ratingUrl + "' alt='"+ypInfo.rating+"'>" : ypInfo.rating);
 			infowindow.setContent("<div>Name: " + locat.title() + "/"+ypInfo.name +"</div>"
 				+ "<div>Address: "+ locat.address + "</div>"
-				+ "<div>Phone: "+ ypInfo.phone + "</div>" 
+				+ "<div>Phone: "+ (ypInfo.phone === undefined ? 'Not available' : ypInfo.phone) + "</div>" 
 				+ "<div>Rating: " + tmp + "</div>"
 			);
 		}
