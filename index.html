@@ -40,7 +40,7 @@
 			width: 100%;
 			margin-bottom: 30px;
 		}
-		#reset {
+		.reset {
 			float: right;
 
 		}
@@ -63,7 +63,9 @@
 						<li><a href="#" data-bind="text: title, click: $root.schoolSelect"></a></li>
 					</ul>
 				</div>
-				
+				<div class="reset">
+					<button type="button" id="btn-reset-school" class="btn btn-default" data-bind="style: {display : isShowSchool}, click: clearSchool">Clear</button>
+				</div>
 			</div>
 			<div id="filter">
 				<div class="btn-group">
@@ -75,8 +77,8 @@
 						<li><a href="#" data-bind="text: $data, click: $root.categorySelect"></a></li>
 					</ul>
 				</div>
-				<div id="reset">
-					<button type="button" id="btn-reset" class="btn btn-default" data-bind="style: {display : isShow}, click: clearCategory">Clear</button>
+				<div class="reset">
+					<button type="button" id="btn-reset" class="btn btn-default" data-bind="style: {display : isShowCategory}, click: clearCategory">Clear</button>
 				</div>
 			</div>
 			<div id="show-results">
@@ -116,7 +118,7 @@
 		function nearbySearch(location, types) {
 			service.nearbySearch({
 				location: location,
-				radius: 300,
+				radius: '1000',
 				types: types
 			}, callback);
 		}

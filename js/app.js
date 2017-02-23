@@ -9,12 +9,15 @@ var ViewModel = function() {
 	var self = this;
 	self.locationList = ko.observableArray([]);
 	self.markers = [];
-	self.categories = ['food', 'park', 'store'];
+	self.categories = ['restaurant', 'cafe', 'bar','book_store', 'bicycle_store'];
 	self.category = ko.observable('Select Category');
 	self.schools = initialLoactions;
 	self.school = ko.observable('Select School');
-	self.isShow = ko.computed(function() {
+	self.isShowCategory = ko.computed(function() {
 		return self.category() !== 'Select Category' ? 'inline-block' : 'none'; 
+	});
+	self.isShowSchool = ko.computed(function() {
+		return self.school() !== 'Select School' ? 'inline-block' : 'none'; 
 	});
 
 	self.YELP_KEY = "PsvRnMIZQvIaO8ep4seiVA";
@@ -31,7 +34,7 @@ var ViewModel = function() {
 
 	self.showInfoWindow = function(location) {
 		toggleBounce(self.markers[location.index()]);
-		console.log(location.title());
+		//console.log(location.title());
 		var yelpInfo = {
 			name: 'Not available',
 			phone: 'Not available', 
@@ -48,6 +51,7 @@ var ViewModel = function() {
 		    callback: 'cb',           // This is crucial to include for jsonp implementation in AJAX or else the oauth-signature will be wrong.
 		    location: location.address.split(' ').join('+'),//'3601+Trousdale+Parkway,+Los Angeles',
 		    //sort: '1',
+
 		    term: location.title(),
 		    cll: self.markers[location.index()].position.lat+','+self.markers[location.index()].position.lng
   		};
@@ -116,7 +120,9 @@ var ViewModel = function() {
 		self.clearLocations();
 		//nearbySearch(locat, [value]);
 		initialLoactions.forEach(function(item) {
+			if (item.title == self.school() || self.school() == 'Select School') {
 				nearbySearch(item.location, [value]);
+			}
 		});
 	};
 
@@ -145,11 +151,22 @@ var ViewModel = function() {
 		bounds = new google.maps.LatLngBounds();
 	};
 
+	self.clearSchool = function() {
+		self.school('Select School');
+		self.clearLocations();
+		var cate = (self.category() === 'Select Category' ? self.categories : [self.category()]);
+		initialLoactions.forEach(function(item) {
+			nearbySearch(item.location, cate);
+		});
+	};
+
 	self.clearCategory = function() {
 		self.category('Select Category');
 		self.clearLocations();
 		initialLoactions.forEach(function(item) {
-			nearbySearch(item.location, self.categories);
+			if (item.title == self.school() || self.school() == 'Select School') {
+				nearbySearch(item.location, self.categories);
+			}
 		});
 	};
 };
