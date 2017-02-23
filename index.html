@@ -9,6 +9,7 @@
 			margin: 0;
 			padding: 0;
 			font-family: Arial, sans-serif;
+			color: white;
 		}
 		ul {
 			padding: 0;
@@ -19,73 +20,120 @@
 		#map {
 			height: 100%;
 			position: absolute;
-			left: 345px;
+			left: 335px;
 			right: 0;
 			top: 0;
+			color: black;
+		}
+		.title {
+			border-bottom: 1px solid #24323e;
 		}
 		#side {
-			width: 340px;
-			padding: 10px 10px 30px 10px;
+			background: #2e3d49;
+			width: 330px;
 			border: 1px solid #999;
 			height: 100%;
 			border-radius: 3px;
 			line-height: 35px;
+			overflow: auto;
 		}
-		#input {
+		.content {
+			padding: 5px 10px 5px 10px;
+		}
+		.input {
 			width: 160px;
 			text-align: left;
 		}
-		#filter {
-			padding: 0;
-			width: 100%;
-			margin-bottom: 30px;
+		.btn-input {
+			width: 75px;
 		}
 		.reset {
 			float: right;
-
 		}
 		.item {
-			border: solid 1px;
 			list-style: none;
+			border-top: 1px solid #32383F;
+			background-color: #24323e;
+			cursor: pointer;
+		}
+		
+		.info-window {
+			color: #000000;
+		}
+		.menu-arrow-collapsed {
+			display: inline-block;
+			background: transparent no-repeat;
+			width: 24px;
+			height: 24px;
+			margin-top: 8px;
+			background-position: center;
+			background-image: url(images/icon-expand-arrow-small.svg);
+			transform: rotate(-180deg);
+			float: right;	
+		}
+		ol {
+			list-style: none;
+			padding: 0;
+			width: 100%;
+		}
+		li {
+			padding-top: 7px;
+			padding-bottom: 7px;
+			width: 100%;
 		}
 	</style>
 </head>
 <body>
 	<div id="container">
 		<div id="side">
-			<div id="title">
+			<div class="title content">
 				<h2>Locations</h2>
 			</div>
-			<div>
-				<div class="btn-group">
-					<button type="button" id="input-school" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-bind="text: school"></button>
-					<ul class="dropdown-menu" role="menu" data-bind="foreach: schools">
-						<li><a href="#" data-bind="text: title, click: $root.schoolSelect"></a></li>
-					</ul>
-				</div>
-				<div class="reset">
-					<button type="button" id="btn-reset-school" class="btn btn-default" data-bind="style: {display : isShowSchool}, click: clearSchool">Clear</button>
-				</div>
-			</div>
-			<div id="filter">
-				<div class="btn-group">
-					<button type="button" id="input" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-bind="text: category"></button>
-					<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-						Filter&nbsp;<span class="glyphicon glyphicon-filter"></span>
-					</button>
-					<ul class="dropdown-menu" role="menu" data-bind="foreach: categories">
-						<li><a href="#" data-bind="text: $data, click: $root.categorySelect"></a></li>
-					</ul>
-				</div>
-				<div class="reset">
-					<button type="button" id="btn-reset" class="btn btn-default" data-bind="style: {display : isShowCategory}, click: clearCategory">Clear</button>
-				</div>
-			</div>
-			<div id="show-results">
-				<ul id="results" data-bind="foreach: locationList">
-					<li class="item" data-bind="text: title, click: $root.showInfoWindow"></li>
-				</ul>
-			</div>
+			<ol>
+				<li>
+					<ol class="title">
+						<li class="content">
+							<div class="btn-group">
+								<button type="button" class="btn btn-default dropdown-toggle input" data-toggle="dropdown" data-bind="text: school"></button>
+								<button type="button" class="btn btn-primary dropdown-toggle btn-input" data-toggle="dropdown">
+									UC&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-book"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu" data-bind="foreach: schools">
+									<li><a href="#" data-bind="text: title, click: $root.schoolSelect"></a></li>
+								</ul>
+							</div>
+							<div class="reset">
+								<button type="button" id="btn-reset-school" class="btn btn-default" data-bind="style: {display : isShowSchool}, click: clearSchool">Clear</button>
+							</div>
+						</li>
+						<li class="content">
+							<div class="btn-group">
+								<button type="button" class="btn btn-default dropdown-toggle input" data-toggle="dropdown" data-bind="text: category"></button>
+								<button type="button" class="btn btn-primary dropdown-toggle btn-input" data-toggle="dropdown">
+									Filter&nbsp;<span class="glyphicon glyphicon-filter"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu" data-bind="foreach: categories">
+									<li><a href="#" data-bind="text: $data, click: $root.categorySelect"></a></li>
+								</ul>
+							</div>
+							<div class="reset">
+								<button type="button" id="btn-reset" class="btn btn-default" data-bind="style: {display : isShowCategory}, click: clearCategory">Clear</button>
+							</div>
+						</li>
+					</ol>
+				</li>
+				<li>
+					<h3 class="content">Results: </h3>
+					<ol id="results" data-bind="foreach: locationList">
+						<li class="item" data-bind="click: $root.showInfoWindow">
+							<div class="content">
+								<span data-bind="text: title"></span>
+								<div class="menu-arrow-collapsed"></div>
+							</div>
+						</li>
+					</ol>
+				</li>
+			</ol>
 		</div>
 		<div id="map"></div>
 	</div>
