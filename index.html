@@ -9,7 +9,7 @@
 <body>
 	<div class="container">
 		<!-- TODO: add sidebar -->
-		<nav class="side" data-bind="style: { width: isClick() ? '330px' : '0' }">
+		<nav class="side" >
 			<div class="title content">
 				<h2>Locations</h2>
 			</div>
@@ -62,14 +62,14 @@
 				</li>
 			</ol>
 		</nav>
-		<div class="nav-bar" data-bind="style: {left: isClick() ? '330px' : '0'}">
+		<div class="nav-bar" data-bind="css: {'nav-with-sidebar': isClick}">
 			<button type="button" class="btn btn-primary dropdown-toggle btn-hamburger" data-toggle="dropdown" data-bind="click: slide">
 				<span class="glyphicon glyphicon-menu-hamburger"></span>
 			</button>
 			<h2>Neighborhood Map</h2>
 		</div>
 		<div class="main">
-			<div id="map" class="map" data-bind="style: {left: isClick() ? '330px' : '0'}"></div>
+			<div id="map" class="map" data-bind="css: {'map-with-sidebar': isClick}"></div>
 		</div>
 	</div>
 	<script src="js/collections.js"></script>

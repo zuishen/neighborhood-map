@@ -34,9 +34,9 @@ li {
 
 .side {
 	background: #2e3d49;
-	width: 0;
 	height: 100%;
 	line-height: 35px;
+	width: 330px;
 	overflow: auto;
 	transition: all 0.3s ease;
 }
@@ -92,6 +92,10 @@ li {
 	transition: all 0.3s ease;
 }
 
+.nav-with-sidebar {
+	left: 330px;
+}
+
 .btn-hamburger {
 	display: inline-block;
 	float: left;
@@ -113,11 +117,15 @@ li {
 /* Map */
 .map {
 	position: absolute;
-	left: 0;
 	right: 0;
+	left: 0;
 	top: 74px;
 	color: black;
 	bottom: 0;
 	transition: all 0.3s ease;
+}
+
+.map-with-sidebar {
+	left: 330px;
 }
 
