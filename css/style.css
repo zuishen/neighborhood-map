@@ -1,0 +1,120 @@
+html, 
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	font-family: "Josefin Sans", sans-serif;
+	font-size: 18px;
+	color: white;
+}
+
+ul {
+	padding: 0;
+}
+
+ol {
+	list-style: none;
+	padding: 0;
+	width: 100%;
+}
+
+li {
+	padding-top: 7px 0 7px 0;
+	width: 100%;
+}
+
+
+/* class styles*/
+/* Right Side Bar */
+.container {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.side {
+	background: #2e3d49;
+	width: 330px;
+	height: 100%;
+	line-height: 35px;
+	overflow: auto;
+}
+
+.title {
+	border-bottom: 1px solid #24323e;
+}
+
+/* Set the content padding, which is different from background(container)*/
+.content {
+	padding: 5px 10px 5px 10px;
+}
+
+.input {
+	width: 160px;
+	text-align: left;
+}
+
+.btn-input {
+	width: 75px;
+}
+
+.reset {
+	float: right;
+}
+
+.item {
+	list-style: none;
+	border-top: 1px solid #32383F;
+	background-color: #24323e;
+	cursor: pointer;
+}
+
+.info-window {
+	color: #000;
+}
+
+
+
+/* Top Side Bar*/
+.nav-bar {
+	background: #1c262f;
+	border-bottom: 1px solid #1c262f;
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+	position: absolute;
+	height: 74px;
+	line-height: 74px;
+	left: 330px;
+	right: 0;
+	top: 0;
+	text-align: center;
+	margin: 0;
+}
+
+.btn-hamburger {
+	display: inline-block;
+	float: left;
+	margin: 15px 0 0 15px;
+}
+
+.menu-arrow-collapsed {
+	display: inline-block;
+	background: transparent no-repeat;
+	width: 24px;
+	height: 24px;
+	margin-top: 8px;
+	background-position: center;
+	background-image: url(../images/icon-expand-arrow-small.svg);
+	transform: rotate(-180deg);
+	float: right;	
+}
+
+/* Map */
+.map {
+	position: absolute;
+	left: 330px;
+	right: 0;
+	top: 74px;
+	color: black;
+	bottom: 0;
+}
+

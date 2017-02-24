@@ -2,96 +2,21 @@
 <html>
 <head>
 	<title>Neighborhood Map</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<style type="text/css">
-		html, body {
-			height: 100%;
-			margin: 0;
-			padding: 0;
-			font-family: Arial, sans-serif;
-			color: white;
-		}
-		ul {
-			padding: 0;
-		}
-		#container {
-			height: 100%;
-		}
-		#map {
-			height: 100%;
-			position: absolute;
-			left: 335px;
-			right: 0;
-			top: 0;
-			color: black;
-		}
-		.title {
-			border-bottom: 1px solid #24323e;
-		}
-		#side {
-			background: #2e3d49;
-			width: 330px;
-			border: 1px solid #999;
-			height: 100%;
-			border-radius: 3px;
-			line-height: 35px;
-			overflow: auto;
-		}
-		.content {
-			padding: 5px 10px 5px 10px;
-		}
-		.input {
-			width: 160px;
-			text-align: left;
-		}
-		.btn-input {
-			width: 75px;
-		}
-		.reset {
-			float: right;
-		}
-		.item {
-			list-style: none;
-			border-top: 1px solid #32383F;
-			background-color: #24323e;
-			cursor: pointer;
-		}
-		
-		.info-window {
-			color: #000000;
-		}
-		.menu-arrow-collapsed {
-			display: inline-block;
-			background: transparent no-repeat;
-			width: 24px;
-			height: 24px;
-			margin-top: 8px;
-			background-position: center;
-			background-image: url(images/icon-expand-arrow-small.svg);
-			transform: rotate(-180deg);
-			float: right;	
-		}
-		ol {
-			list-style: none;
-			padding: 0;
-			width: 100%;
-		}
-		li {
-			padding-top: 7px;
-			padding-bottom: 7px;
-			width: 100%;
-		}
-	</style>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-	<div id="container">
-		<div id="side">
+	<div class="container">
+		<!-- TODO: add sidebar -->
+		<nav class="side">
 			<div class="title content">
 				<h2>Locations</h2>
 			</div>
 			<ol>
 				<li>
 					<ol class="title">
+						<!--TODO: add dropdown menu for filtering schools -->
 						<li class="content">
 							<div class="btn-group">
 								<button type="button" class="btn btn-default dropdown-toggle input" data-toggle="dropdown" data-bind="text: school"></button>
@@ -106,6 +31,7 @@
 								<button type="button" id="btn-reset-school" class="btn btn-default" data-bind="style: {display : isShowSchool}, click: clearSchool">Clear</button>
 							</div>
 						</li>
+						<!--TODO: add dropdown menu for filtering categories -->
 						<li class="content">
 							<div class="btn-group">
 								<button type="button" class="btn btn-default dropdown-toggle input" data-toggle="dropdown" data-bind="text: category"></button>
@@ -122,6 +48,7 @@
 						</li>
 					</ol>
 				</li>
+				<!-- TODO: show result list -->
 				<li>
 					<h3 class="content">Results: </h3>
 					<ol id="results" data-bind="foreach: locationList">
@@ -134,74 +61,24 @@
 					</ol>
 				</li>
 			</ol>
+		</nav>
+		<div class="nav-bar">
+				<a type="button" class="btn btn-primary dropdown-toggle btn-hamburger" data-toggle="dropdown">
+					<span class="glyphicon glyphicon-menu-hamburger"></span>
+				</a>
+			<h2>Neighborhood Map</h2>
 		</div>
-		<div id="map"></div>
+		<div class="main">
+			<div id="map" class="map"></div>
+		</div>
 	</div>
-	<script type="text/javascript" src="js/collections.js"></script>
-	<script type="text/javascript" src="js/knockout-3.4.1.js"></script>
+	<script src="js/collections.js"></script>
+	<script src="js/knockout-3.4.1.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   	<script src="js/oauth.js"></script>
-	<script type="text/javascript" src="js/app.js"></script>
-	<script type="text/javascript">
-		var map;
-		var infowindow;
-		var bounds;
-		var service;
-		//var locat = {lat: 34.0223519, lng: -118.285117};
-		function initMap() {
-			map = new google.maps.Map(document.getElementById('map'), {
-				center: {lat: 34.0223519, lng: -118.285117},
-				zoom: 13
-			});
-			service = new google.maps.places.PlacesService(map);
-			initialLoactions.forEach(function(item) {
-				nearbySearch(item.location, myViewModel.categories);
-			});
-
-			infowindow = new google.maps.InfoWindow();
-			bounds = new google.maps.LatLngBounds();
-		}
-
-		function nearbySearch(location, types) {
-			service.nearbySearch({
-				location: location,
-				radius: '1000',
-				types: types
-			}, callback);
-		}
-
-		function callback(results, status) {
-			//console.log(results);
-			if (status === google.maps.places.PlacesServiceStatus.OK) {
-				for (var i = 0; i < results.length; i++) {
-					createMarker(results[i]);		
-				}
-			}
-			map.fitBounds(bounds);
-		}
-		function createMarker(place) {
-		  	var placeLoc = place.geometry.location;
-		  	var marker = new google.maps.Marker({
-			    map: map,
-			    position: place.geometry.location,
-			    animation: google.maps.Animation.DROP
-		  	});
-		  	bounds.extend(marker.position);
-		  	var index = myViewModel.addMarker(marker, place.name, place.vicinity);
-		  	google.maps.event.addListener(marker, 'click', function() {
-		    	myViewModel.showInfoWindow(myViewModel.getLocation(index));
-		  	});
-		}
-
-		function toggleBounce(marker) {
-		  	if (marker.getAnimation() !== null) {
-		    	marker.setAnimation(null);
-		  	} else {
-		    	marker.setAnimation(google.maps.Animation.BOUNCE);
-		  	}
-		}
-	</script>
+	<script src="js/app.js"></script>
+	<script src="js/map.js"></script>
 	<script async defer 
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGXytnUuXlETU_dEEwqCJLbAXmq6-kbjE&v=3&callback=initMap&libraries=places">
 	</script>
