@@ -116,7 +116,7 @@ var ViewModel = function() {
 	* @param {object} marker - marker associate to google maps API
 	* @param {string} name - the name of the location where this marker on 
 	* @param {string} address - the address of this location
-	* @param {number} i - the index of the marker and the location in arrays storing them
+	* @return {number} i - the index of the marker and the location in arrays storing them
 	*/
 	self.addMarker = function(marker, name, address) {
 		var i = self.markers.length;
