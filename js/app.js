@@ -30,6 +30,7 @@ var ViewModel = function() {
 	self.category = ko.observable('Select Category');
 	self.schools = initialLoactions;
 	self.school = ko.observable('Select School');
+	self.isClick = ko.observable(false);
 
 	self.isShowSchool = ko.computed(function() {
 		// choose whether to show the clear button for school dropdown menu
@@ -42,6 +43,14 @@ var ViewModel = function() {
 
 
 	// TODO: define behaviors
+
+	self.slide = function() {
+		self.isClick(!self.isClick());
+		setTimeout(function() {
+		  //your code to be executed after 0.301 second
+		  google.maps.event.trigger(map, 'resize');
+		}, 300);
+	};
 
 	self.nonce_generate = function() {
   		return (Math.floor(Math.random() * 1e12).toString());

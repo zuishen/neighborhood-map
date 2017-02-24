@@ -34,10 +34,11 @@ li {
 
 .side {
 	background: #2e3d49;
-	width: 330px;
+	width: 0;
 	height: 100%;
 	line-height: 35px;
 	overflow: auto;
+	transition: all 0.3s ease;
 }
 
 .title {
@@ -83,11 +84,12 @@ li {
 	position: absolute;
 	height: 74px;
 	line-height: 74px;
-	left: 330px;
+	left: 0;
 	right: 0;
 	top: 0;
 	text-align: center;
 	margin: 0;
+	transition: all 0.3s ease;
 }
 
 .btn-hamburger {
@@ -111,10 +113,11 @@ li {
 /* Map */
 .map {
 	position: absolute;
-	left: 330px;
+	left: 0;
 	right: 0;
 	top: 74px;
 	color: black;
 	bottom: 0;
+	transition: all 0.3s ease;
 }
 
