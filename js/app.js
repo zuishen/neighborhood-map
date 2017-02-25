@@ -30,7 +30,8 @@ var ViewModel = function() {
 	self.category = ko.observable('Select Category');
 	self.schools = initialLoactions;
 	self.school = ko.observable('Select School');
-	self.isClick = ko.observable(false);
+	self.width = ko.observable($(window).width());
+	self.isClick = ko.observable(self.width() > 1024 ? true : false);
 
 	self.isShowSchool = ko.computed(function() {
 		// choose whether to show the clear button for school dropdown menu
@@ -39,6 +40,26 @@ var ViewModel = function() {
 	self.isShowCategory = ko.computed(function() {
 		// choose whether to show the clear button for category dropdown menu
 		return self.category() !== 'Select Category' ? 'inline-block' : 'none';
+	});
+	self.smallWidth = ko.computed(function() {
+		console.log(self.width());
+		if (self.width() < 568) {
+			return self.isClick() ? self.width() * -0.8 + 'px': '0';
+		} else if (self.width() > 1024){
+			return '0';
+		} else {
+			return self.isClick() ? '-330px' : '0';
+		}
+	});
+	self.slideWidth = ko.computed(function() {
+		if (self.width() < 568) {
+			return self.isClick() ? self.width() * 0.8 + 'px' : '0';
+		} else if (self.width > 1024) { 
+			return self.isClick() ? '0' : '330px';
+		}else{
+			return self.isClick() ? '330px' : '0';
+		}
+
 	});
 
 
@@ -230,4 +251,8 @@ var ViewModel = function() {
 };
 
 var myViewModel = new ViewModel();
+var $window = $(window);
+$window.resize(function () {
+    myViewModel.width($window.width());
+});
 ko.applyBindings(myViewModel);

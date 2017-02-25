@@ -4,20 +4,12 @@ var initialLoactions = [
 		location: {lat: 37.8718992, lng: -122.2585399}
 	},
 	{
-		title: 'UC, Davis',
-		location: {lat: 38.5382322, lng: -121.7617125}
-	},
-	{
 		title: 'UC, Irvine',
 		location: {lat: 33.6404952, lng: -117.8442962}
 	},
 	{
 		title: 'UC, Los Angeles',
 		location: {lat: 34.068921, lng: -118.4451811}
-	},
-	{
-		title: 'UC, Merced',
-		location: {lat: 37.3648025, lng: -120.4244095}
 	},
 	{
 		title: 'UC, Riverside',
