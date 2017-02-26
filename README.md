@@ -13,3 +13,9 @@ This project is developed for Front End Developer Nanodegree Udacity. It shows n
 
 # APIs 
 Google maps API is used for showing map, markers, infomatino window and animations and Yelp API is used for getting the information such as phone number and ratings for places.
+
+# Thanks to following resources for help:
+1. https://developers.google.com/maps/documentation/javascript/places 
+2. https://www.yelp.com/developers/documentation/v2/search_api
+3. https://discussions.udacity.com/t/google-maps-api-onerror-function-is-never-executed/202911
+4. http://knockoutjs.com/documentation/introduction.html
