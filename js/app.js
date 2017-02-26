@@ -42,7 +42,7 @@ var ViewModel = function() {
 		return self.category() !== 'Select Category' ? 'inline-block' : 'none';
 	});
 	self.smallWidth = ko.computed(function() {
-		console.log(self.width());
+		//console.log(self.width());
 		if (self.width() < 568) {
 			return self.isClick() ? self.width() * -0.8 + 'px': '0';
 		} else if (self.width() > 1024){
@@ -123,7 +123,7 @@ var ViewModel = function() {
 		    dataType: 'jsonp',
 		    success: function(yelpResults) {
 			    // Do stuff with results
-			    //console.log(yelpResults);
+			    console.log(yelpResults);
 			    if (yelpResults.businesses.length > 0) {
 			    	yelpInfo.name = yelpResults.businesses[0].name;
 			    	yelpInfo.phone = yelpResults.businesses[0].display_phone;
@@ -132,8 +132,11 @@ var ViewModel = function() {
 			    }
 		    	self.makeInfoWindow(location, yelpInfo);
 			},
-		    fail: function(xhr, status, error) {
-		      	console.log("An AJAX error occured: " + status + "\nError: " + error + "\nError detail: " + xhr.responseText);
+		    error: function(xhr, status, error) {
+		    	alert('Failed to get Yelp information!');
+		    	self.makeInfoWindow(location, yelpInfo);
+		    	//toggleBounce(self.markers[location.index()]);
+		      	//console.log("An AJAX error occured: " + status + "\nError: " + error + "\nError detail: " + xhr.responseText);
 		    }
 		};
 
@@ -164,7 +167,7 @@ var ViewModel = function() {
 		var marker = self.markers[locat.index()];
     	if (infowindow.marker != marker) {
     		var tmp = (ypInfo.rating !== 'Not available' ? "<img src='"+ ypInfo.ratingUrl + "' alt='"+ypInfo.rating+"'>" : ypInfo.rating);
-			infowindow.setContent("<div>Name: " + locat.title() + "/"+ypInfo.name +"</div>"
+			infowindow.setContent("<div>Name: " + locat.title() + "</div>"//"/"+ypInfo.name +"</div>"
 				+ "<div>Address: "+ locat.address + "</div>"
 				+ "<div>Phone: "+ (ypInfo.phone === undefined ? 'Not available' : ypInfo.phone) + "</div>"
 				+ "<div>Rating: " + tmp + "</div>"

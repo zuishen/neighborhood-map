@@ -57,3 +57,7 @@ function toggleBounce(marker) {
     	marker.setAnimation(google.maps.Animation.BOUNCE);
   	}
 }
+
+function googleError() {
+	alert("Could not load Google Maps!");
+}
