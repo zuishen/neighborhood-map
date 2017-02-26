@@ -1,5 +1,5 @@
-# neighborhood-map
-This project is developed for Front End Developer Nanodegree Udacity. It shows neighborhoods of the UC system universities in California on google map and provide information about these neighbor places.
+# Neighborhood-Map
+This project is developed for Front End Developer Nanodegree Udacity. It shows neighborhoods of the UC system universities in California on google map and provides information about these neighbor places.
 
 # How to Use the app 
 1. Clone or Download from git.
