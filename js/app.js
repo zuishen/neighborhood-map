@@ -82,7 +82,9 @@ var ViewModel = function() {
 	* @param {object} location - the location to get the detail place information
 	*/
 	self.showInfoWindow = function(location) {
-		toggleBounce(self.markers[location.index()]);
+		var tmpMarker = self.markers[location.index()];
+		centerMarker(tmpMarker);
+		toggleBounce(tmpMarker);
 		//console.log(location.title());
 
 		var yelpInfo = {
@@ -101,7 +103,7 @@ var ViewModel = function() {
 		    callback: 'cb',// This is crucial to include for jsonp implementation in AJAX or else the oauth-signature will be wrong.
 		    location: location.address.split(' ').join('+'),
 		    term: location.title(),
-		    cll: self.markers[location.index()].position.lat+','+self.markers[location.index()].position.lng
+		    cll: tmpMarker.position.lat + ',' + tmpMarker.position.lng
   		};
 
 		var encodedSignature = oauthSignature.generate(

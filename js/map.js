@@ -54,6 +54,14 @@ function createMarker(place) {
   	});
 }
 
+function centerMarker(marker) {
+	// TODO: recenter the map on the clicked marker.
+	if(map.getZoom() < 12) {
+  		map.setZoom(12);
+  	}
+  	map.setCenter(marker.getPosition());
+}
+
 function toggleBounce(marker) {
   	if (marker.getAnimation() !== null) {
     	marker.setAnimation(null);
