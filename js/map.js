@@ -28,9 +28,13 @@ function nearbySearch(location, types) {
 function callback(results, status) {
 	//console.log(results);
 	if (status === google.maps.places.PlacesServiceStatus.OK) {
+		// success implementation
 		for (var i = 0; i < results.length; i++) {
 			createMarker(results[i]);
 		}
+	} else {
+		// error handling
+		alert('Failed to get neighborhood locations');
 	}
 	map.fitBounds(bounds);
 }
