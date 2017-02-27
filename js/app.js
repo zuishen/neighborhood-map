@@ -127,10 +127,10 @@ var ViewModel = function() {
 			    // Do stuff with results
 			    console.log(yelpResults);
 			    if (yelpResults.businesses.length > 0) {
-			    	yelpInfo.name = yelpResults.businesses[0].name;
-			    	yelpInfo.phone = yelpResults.businesses[0].display_phone;
-		    		yelpInfo.rating = yelpResults.businesses[0].rating;
-		    		yelpInfo.ratingUrl = yelpResults.businesses[0].rating_img_url;
+			    	yelpInfo.name = yelpResults.businesses[0].name || 'No place found';
+			    	yelpInfo.phone = yelpResults.businesses[0].display_phone || 'No phone provided';
+		    		yelpInfo.rating = yelpResults.businesses[0].rating || 'No rating available';
+		    		yelpInfo.ratingUrl = yelpResults.businesses[0].rating_img_url || 'Not availabe';
 			    }
 		    	self.makeInfoWindow(location, yelpInfo);
 			},
@@ -168,10 +168,10 @@ var ViewModel = function() {
 	self.makeInfoWindow = function(locat, ypInfo) {
 		var marker = self.markers[locat.index()];
     	if (infowindow.marker != marker) {
-    		var tmp = (ypInfo.rating !== 'Not available' ? "<img src='"+ ypInfo.ratingUrl + "' alt='"+ypInfo.rating+"'>" : ypInfo.rating);
+    		var tmp = (ypInfo.rating !== 'No rating available' ? "<img src='"+ ypInfo.ratingUrl + "' alt='"+ypInfo.rating+"'>" : ypInfo.rating);
 			infowindow.setContent("<div>Name: " + locat.title() + "</div>"//"/"+ypInfo.name +"</div>"
 				+ "<div>Address: "+ locat.address + "</div>"
-				+ "<div>Phone: "+ (ypInfo.phone === undefined ? 'Not available' : ypInfo.phone) + "</div>"
+				+ "<div>Phone: "+ ypInfo.phone + "</div>"
 				+ "<div>Rating: " + tmp + "</div>"
 			);
 		}
