@@ -26,12 +26,23 @@ var ViewModel = function() {
 	// TODO: define properties
 	self.locationList = ko.observableArray([]);
 	self.markers = [];
-	self.categories = ['restaurant', 'cafe', 'bar','book_store', 'bicycle_store'];
+	self.filter = [];   //save the index of markers after filter
+	self.categories = ['restaurant', 'cafe', 'bar','food', 'store', 'park', 'mall'];
 	self.category = ko.observable('Select Category');
 	self.schools = initialLoactions;
 	self.school = ko.observable('Select School');
 	self.width = ko.observable($(window).width());
 	self.isClick = ko.observable(self.width() > 1024 ? true : false);
+	self.query = ko.observable('');
+	self.list = ko.computed(function() {
+		if (!self.query()) {
+			return self.locationList();
+		} else {
+			return ko.utils.arrayFilter(self.locationList(), (location) => {
+				return location.title().toLowerCase().indexOf(self.query().toLowerCase()) !== -1; 
+			});
+		}
+	});
 
 	self.isShowSchool = ko.computed(function() {
 		// choose whether to show the clear button for school dropdown menu
@@ -72,6 +83,25 @@ var ViewModel = function() {
 		  google.maps.event.trigger(map, 'resize');
 		}, 300);
 	};
+
+	self.search = function(value) {
+		//console.log(self.filter());
+		self.filter = [];
+
+		self.locationList().forEach(function(item) {
+			if(item.title().toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+				self.filter.push(item.index());
+			}
+		});
+		self.markers.forEach(function(marker) {
+			marker.setMap(null);
+		});
+		self.filter.forEach(function(elem) {
+			self.markers[elem].setMap(map);
+		});
+	};
+
+	self.query.subscribe(self.search);
 
 	self.nonce_generate = function() {
   		return (Math.floor(Math.random() * 1e12).toString());
@@ -155,6 +185,7 @@ var ViewModel = function() {
 	*/
 	self.addMarker = function(marker, name, address) {
 		var i = self.markers.length;
+		self.filter.push(i);
 		self.markers.push(marker);
 		self.locationList.push(new Location({index: i, name: name, address: address}));
 		return i;

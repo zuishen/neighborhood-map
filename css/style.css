@@ -37,7 +37,7 @@ body {
 	margin: 0;
 	padding: 0;
 	font-family: "Josefin Sans", sans-serif;
-	font-size: 18px;
+	font-size: 19px;
 	color: white;
 }
 
@@ -79,6 +79,10 @@ li {
 .input {
 	width: 160px;
 	text-align: left;
+}
+
+.filter-input {
+	width: 234px;
 }
 
 .btn-input {

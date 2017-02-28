@@ -34,25 +34,19 @@
 						</li>
 						<!--TODO: add dropdown menu for filtering categories -->
 						<li class="content">
-							<div class="btn-group">
-								<button type="button" class="btn btn-default dropdown-toggle input" data-toggle="dropdown" data-bind="text: category"></button>
-								<button type="button" class="btn btn-primary dropdown-toggle btn-input" data-toggle="dropdown">
-									Filter&nbsp;<span class="glyphicon glyphicon-filter"></span>
-								</button>
-								<ul class="dropdown-menu" role="menu" data-bind="foreach: categories">
-									<li><a href="#" data-bind="text: $data, click: $root.categorySelect"></a></li>
-								</ul>
-							</div>
-							<div class="reset">
-								<button type="button" id="btn-reset" class="btn btn-default" data-bind="style: {display : isShowCategory}, click: clearCategory">Clear</button>
-							</div>
+							<div class="input-group filter-input">
+						      	<input type="text" class="form-control" placeholder="Search for..." data-bind="value: query, valueUpadate: 'keyup'" autocomplete="off">
+						        	<span class="input-group-addon btn-input" id="basic-addon2">
+						        		Filter&nbsp;<span class="glyphicon glyphicon-filter"></span>
+						        	</span>
+						    </div><!-- /input-group -->
 						</li>
 					</ol>
 				</li>
 				<!-- TODO: show result list -->
 				<li>
 					<h3 class="content">Results: </h3>
-					<ol id="results" data-bind="foreach: locationList">
+					<ol id="results" data-bind="foreach: list">
 						<li class="item" data-bind="click: $root.showInfoWindow">
 							<div class="content">
 								<span data-bind="text: title"></span>
